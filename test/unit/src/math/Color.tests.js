@@ -28,10 +28,18 @@ export default QUnit.module( 'Maths', () => {
 
 		} );
 
-		// PUBLIC STUFF
-		QUnit.todo( "isColor", ( assert ) => {
+		// EXPOSED CONSTANTS
+		QUnit.test( "Color.NAMES", ( assert ) => {
 
-			assert.ok( false, "everything's gonna be alright" );
+			assert.ok( Color.NAMES.aliceblue == 0xF0F8FF, "Exposed Color.NAMES" );
+
+		} );
+
+		// PUBLIC STUFF
+		QUnit.test( "isColor", ( assert ) => {
+
+			var c = new Color();
+			assert.ok( c.isColor, "Passed" );
 
 		} );
 
@@ -67,12 +75,6 @@ export default QUnit.module( 'Maths', () => {
 
 		} );
 
-		QUnit.todo( "setRGB", ( assert ) => {
-
-			assert.ok( false, "everything's gonna be alright" );
-
-		} );
-
 		QUnit.test( "setHSL", ( assert ) => {
 
 			var c = new Color();
@@ -89,6 +91,16 @@ export default QUnit.module( 'Maths', () => {
 		QUnit.todo( "setStyle", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
+
+		} );
+
+		QUnit.test( "setStyleName", ( assert ) => {
+
+			var c = new Color();
+			var res = c.setStyleName( "aliceblue" );
+
+			assert.ok( c.getHex() == 0xF0F8FF, "Hex: " + c.getHex() );
+			assert.ok( c == res, "Returns Self" );
 
 		} );
 
