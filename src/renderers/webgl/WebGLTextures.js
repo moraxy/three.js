@@ -123,7 +123,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 		if ( ! capabilities.isWebGL2 ) return glFormat;
 
 		// The user provided an internal format, no need to apply deduction.
-		if ( internalFormat ) return utils.convert( internalFormat );
+		if ( internalFormat !== null ) return utils.convert( internalFormat );
 
 		var internalFormat = glFormat;
 
