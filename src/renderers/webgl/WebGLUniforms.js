@@ -613,12 +613,12 @@ function setValueT1Array( gl, v, textures ) {
 
 }
 
-function setValueT2DArray1Array( gl, v, renderer ) {
+function setValueT2DArray1Array( gl, v, textures ) {
 
 	var cache = this.cache;
 	var n = v.length;
 
-	var units = allocTexUnits( renderer, n );
+	var units = allocTexUnits( textures, n );
 
 	if ( arraysEqual( cache, units ) === false ) {
 
@@ -629,18 +629,18 @@ function setValueT2DArray1Array( gl, v, renderer ) {
 
 	for ( var i = 0; i !== n; ++ i ) {
 
-		renderer.setTexture2DArray( v[ i ] || emptyTexture2dArray, units[ i ] );
+		textures.setTexture2DArray( v[ i ] || emptyTexture2dArray, units[ i ] );
 
 	}
 
 }
 
-function setValueT3D1Array( gl, v, renderer ) {
+function setValueT3D1Array( gl, v, textures ) {
 
 	var cache = this.cache;
 	var n = v.length;
 
-	var units = allocTexUnits( renderer, n );
+	var units = allocTexUnits( textures, n );
 
 	if ( arraysEqual( cache, units ) === false ) {
 
@@ -651,7 +651,7 @@ function setValueT3D1Array( gl, v, renderer ) {
 
 	for ( var i = 0; i !== n; ++ i ) {
 
-		renderer.setTexture3D( v[ i ] || emptyTexture3d, units[ i ] );
+		textures.setTexture3D( v[ i ] || emptyTexture3d, units[ i ] );
 
 	}
 
