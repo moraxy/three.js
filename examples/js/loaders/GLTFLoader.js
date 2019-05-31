@@ -1603,6 +1603,9 @@ THREE.GLTFLoader = ( function () {
 		// BufferGeometry caching
 		this.primitiveCache = {};
 
+		// Track node names, to ensure no duplicates
+		this.nodeNamesUsed = {};
+
 		this.textureLoader = new THREE.TextureLoader( this.options.manager );
 		this.textureLoader.setCrossOrigin( this.options.crossOrigin );
 
@@ -2432,6 +2435,22 @@ THREE.GLTFLoader = ( function () {
 
 	};
 
+	GLTFParser.prototype.assignUniqueName = function ( object, originalName ) {
+
+		var name = originalName;
+
+		for ( var i = 1; this.nodeNamesUsed[ name ]; ++ i ) {
+
+			name = originalName + '_' + i;
+
+		}
+
+		this.nodeNamesUsed[ name ] = true;
+
+		object.name = name;
+
+	};
+
 	/**
 	 * @param {THREE.BufferGeometry} geometry
 	 * @param {GLTF.Primitive} primitiveDef
@@ -2659,9 +2678,7 @@ THREE.GLTFLoader = ( function () {
 
 					}
 
-					mesh.name = meshDef.name || ( 'mesh_' + meshIndex );
-
-					if ( geometries.length > 1 ) mesh.name += '_' + i;
+					parser.assignUniqueName( mesh, meshDef.name || ( 'mesh_' + meshIndex ) );
 
 					assignExtrasToUserData( mesh, meshDef );
 
@@ -2721,7 +2738,7 @@ THREE.GLTFLoader = ( function () {
 
 		}
 
-		if ( cameraDef.name !== undefined ) camera.name = cameraDef.name;
+		if ( cameraDef.name !== undefined ) this.assignUniqueName( camera, cameraDef.name );
 
 		assignExtrasToUserData( camera, cameraDef );
 
@@ -3004,7 +3021,8 @@ THREE.GLTFLoader = ( function () {
 			if ( nodeDef.name !== undefined ) {
 
 				node.userData.name = nodeDef.name;
-				node.name = THREE.PropertyBinding.sanitizeNodeName( nodeDef.name );
+
+				parser.assignUniqueName( node, THREE.PropertyBinding.sanitizeNodeName( nodeDef.name ) );
 
 			}
 
@@ -3161,7 +3179,7 @@ THREE.GLTFLoader = ( function () {
 			var parser = this;
 
 			var scene = new THREE.Scene();
-			if ( sceneDef.name !== undefined ) scene.name = sceneDef.name;
+			if ( sceneDef.name !== undefined ) parser.assignUniqueName( scene, sceneDef.name );
 
 			assignExtrasToUserData( scene, sceneDef );
 
