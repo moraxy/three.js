@@ -5,6 +5,7 @@ const linesAndCols = require( 'lines-and-columns' );
 const stringify = require( 'json-stable-stringify' );
 const glob = require( 'glob' );
 const Promise = require( 'bluebird' );
+const signale = require( 'signale' );
 const writeFilePromise = Promise.promisify( fs.writeFile );
 
 
