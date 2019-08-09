@@ -5,8 +5,9 @@ import {
 	Wrapping,
 	TextureFilter,
 	PixelFormat,
+	PixelFormatInternal,
 	TextureDataType,
-	TextureEncoding,
+	TextureEncoding
 } from '../constants';
 
 // Textures /////////////////////////////////////////////////////////////////////
@@ -40,6 +41,7 @@ export class Texture extends EventDispatcher {
 	minFilter: TextureFilter;
 	anisotropy: number;
 	format: PixelFormat;
+	internalFormat: PixelFormatInternal;
 	type: TextureDataType;
 	offset: Vector2;
 	repeat: Vector2;
