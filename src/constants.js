@@ -155,6 +155,11 @@ export var RGB5_A1Format = 1079;
 export var RGB10_A2Format = 1080;
 export var RGB10_A2UIFormat = 1081;
 export var SRGB8_ALPHA8Format = 1082;
+export var DepthComponent16Format = 1083;
+export var DepthComponent24Format = 1084;
+export var DepthComponent32FFormat = 1085;
+export var Depth24Stencil8Format = 1086;
+export var Depth32FStencil8Format = 1087;
 
 export var RGB_S3TC_DXT1_Format = 33776;
 export var RGBA_S3TC_DXT1_Format = 33777;

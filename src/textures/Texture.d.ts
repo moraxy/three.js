@@ -41,7 +41,7 @@ export class Texture extends EventDispatcher {
 	minFilter: TextureFilter;
 	anisotropy: number;
 	format: PixelFormat;
-	internalFormat: PixelFormatInternal;
+	internalFormat: PixelFormat | PixelFormatInternal;
 	type: TextureDataType;
 	offset: Vector2;
 	repeat: Vector2;

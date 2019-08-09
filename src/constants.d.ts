@@ -231,6 +231,11 @@ export const RGB5_A1Format: PixelFormatInternal;
 export const RGB10_A2Format: PixelFormatInternal;
 export const RGB10_A2UIFormat: PixelFormatInternal;
 export const SRGB8_ALPHA8Format: PixelFormatInternal;
+export const DepthComponent16Format: PixelFormatInternal;
+export const DepthComponent24Format: PixelFormatInternal;
+export const DepthComponent32FFormat: PixelFormatInternal;
+export const Depth24Stencil8Format: PixelFormatInternal;
+export const Depth32FStencil8Format: PixelFormatInternal;
 
 // Compressed texture formats
 // DDS / ST3C Compressed texture formats
