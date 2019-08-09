@@ -91,7 +91,7 @@ function setupPage( page ) {
 
 	const logger = signale.scope( 'setupPage' );
 
-	logger.action( 'Setting up page...' );
+	logger.info( 'Setting up page...' );
 
 	let setups = [
 		//
