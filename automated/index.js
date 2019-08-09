@@ -53,7 +53,7 @@ const TIMEOUT = 4000;
 const defaultConfig = {
 
 	urlBase: 'https://raw.githack.com/moraxy/three.js/automated/examples/',
-	fileBase: __directory + '/../',
+	fileBase: __dirname + '/../',
 
 	shaderLibPath: 'src/renderers/shaders/ShaderLib.js',
 	shaderChunkPath: 'src/renderers/shaders/ShaderChunk.js',
