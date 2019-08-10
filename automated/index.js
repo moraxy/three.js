@@ -366,12 +366,7 @@ async function gotoUrl( browser, url ) {
 
 							logger.debug( 'All listeners removed' );
 
-							await page.waitFor( 10000, { timeout: 120 * 1000 } );
-
-							return true;
-
-						} )
-						.then( async () => {
+							// await page.waitFor( 4000, { timeout: 60 * 1000 } );
 
 							profilerRunning = false;
 
