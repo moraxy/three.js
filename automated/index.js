@@ -446,18 +446,18 @@ module.exports = { init, search };
 // simple CLI-fication
 if ( require.main === module ) {
 
-	if ( process.argv.length != 3 ) {
+	if ( process.argv.length < 3 || process.argv.length > 5 ) {
 
 		console.error( 'Invalid number of arguments' );
 
-		console.log( `Usage: ${process.argv[ 0 ]} ${process.argv[ 1 ]} <URL> or '-' for all examples` );
+		console.log( `Usage: ${process.argv[ 0 ]} ${process.argv[ 1 ]} <URL or '-' for all examples> [<lowerLimit> [<upperLimit>]]` );
 
 		process.exit( - 1 );
 
 	}
 
 	// eslint-disable-next-line no-unused-vars
-	const [ node, script, url ] = process.argv;
+	const [ node, script, url, lowerLimit, upperLimit ] = process.argv;
 
 	singleMode = ( url === '-' ) ? false : true;
 
@@ -467,7 +467,8 @@ if ( require.main === module ) {
 
 			const exes = glob.sync( __dirname + '/../examples/webgl_*.html' )
 				.filter( f => f.includes( 'offscreencanvas' ) === false )
-				.map( f => f.replace( /^.*?\/examples/i, 'https://raw.githack.com/moraxy/three.js/automated/examples') );
+				.map( f => f.replace( /^.*?\/examples/i, 'https://raw.githack.com/moraxy/three.js/automated/examples') )
+				.slice( lowerLimit, upperLimit );
 
 			console.log( exes );
 			init();
