@@ -1,7 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const fs = require( 'fs' );
 const puppeteer = require( 'puppeteer' );
-const getSource = require( 'get-source' );
-const linesAndCols = require( 'lines-and-columns' );
 const stringify = require( 'json-stable-stringify' );
 const glob = require( 'glob' );
 const Promise = require( 'bluebird' );
@@ -37,8 +36,8 @@ process.on( 'uncaughtException', error => {
 	} else {
 
 		const exes = glob.sync( __dirname + '/../examples/webgl_*.html' )
-		.filter( f => f.includes( 'offscreencanvas' ) === false )
-		.map( f => f.replace( /^.*?\/examples/i, 'https://raw.githack.com/moraxy/three.js/automated/examples') );
+			.filter( f => f.includes( 'offscreencanvas' ) === false )
+			.map( f => f.replace( /^.*?\/examples/i, 'https://raw.githack.com/moraxy/three.js/automated/examples' ) );
 
 		const shortExes = exes.slice( exes.indexOf( currentUrl ) + 1 );
 		console.log( { shortExes } );
@@ -74,7 +73,6 @@ var config;
 const seedRandom = fs.readFileSync( __dirname + '/seedrandom.min.js', 'utf8' );
 const timekeeper = fs.readFileSync( __dirname + '/timekeeper.min.js', 'utf8' );
 
-var source;
 let currentUrl; // evil hack
 let singleMode; // same evil hack
 
@@ -118,13 +116,6 @@ function init( configOverrides = {} ) {
 
 	// apply overrides to default values
 	config = Object.assign( defaultConfig, configOverrides );
-
-	// this is used to skip minified js libs
-	acceptableScriptUrlsRx = new RegExp( config.urlBase + '.*?(?<!min)\\.js$' );
-
-	source = fs.readFileSync( config.fileBase + config.mainScriptPath, 'utf8' );
-	lines = new linesAndCols.default( source );
-	sourceMapped = getSource( config.fileBase + config.mainScriptPath );
 
 	logger.debug( `Modify script at ${config.fileBase + config.mainScriptPath}` );
 	modifiedTHREE = fs.readFileSync( config.fileBase + config.mainScriptPath, 'utf8' ) + ';debugger;';
@@ -310,7 +301,7 @@ async function gotoUrl( browser, url ) {
 	await client.send( 'Runtime.enable' );
 	await client.send( 'Debugger.enable' );
 	await client.send( 'Performance.enable' );
-	client.addListener( 'Debugger.paused', async ( event ) => {
+	client.addListener( 'Debugger.paused', async ( ) => {
 
 		if ( profilerRunning === false ) {
 
@@ -354,8 +345,6 @@ async function gotoUrl( browser, url ) {
 				.then( () => {
 
 					logger.debug( 'Arrived' );
-
-					pageStart = Date.now();
 
 					return promiseNetworkHasBeenIdle
 						.then( async () => {
@@ -445,14 +434,14 @@ if ( require.main === module ) {
 
 		console.error( 'Invalid number of arguments' );
 
-		console.log( `Usage: ${process.argv[ 0 ]} ${process.argv[ 1 ]} <URL or '-' for all examples> [<lowerLimit> [<upperLimit>]]` );
+		console.log( `Usage: ${process.argv[ 0 ]} ${process.argv[ 1 ]} <URL or '-' for all examples> [<jobNumber> <totalJobs>]` );
 
 		process.exit( - 1 );
 
 	}
 
 	// eslint-disable-next-line no-unused-vars
-	const [ node, script, url, lowerLimit, upperLimit ] = process.argv;
+	const [ node, script, url, jobNumber, totalJobs ] = process.argv;
 
 	singleMode = ( url === '-' ) ? false : true;
 
@@ -462,12 +451,15 @@ if ( require.main === module ) {
 
 			const exes = glob.sync( __dirname + '/../examples/webgl_*.html' )
 				.filter( f => f.includes( 'offscreencanvas' ) === false )
-				.map( f => f.replace( /^.*?\/examples/i, 'https://raw.githack.com/moraxy/three.js/automated/examples') )
-				.slice( lowerLimit, upperLimit );
+				.map( f => f.replace( /^.*?\/examples/i, 'https://raw.githack.com/moraxy/three.js/automated/examples' ) );
 
-			console.log( exes );
+			const chunkSize = Math.ceil( exes.length / totalJobs ); // err on one too many instead of one too few
+
+			const workload = exes.slice( ( jobNumber - 1 ) * chunkSize, ( jobNumber - 1 ) * chunkSize + chunkSize );
+
+			console.log( 'chunkSize', chunkSize, 'length', workload.length, workload );
 			init();
-			search( exes );
+			search( workload );
 
 		} else {
 
