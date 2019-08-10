@@ -7,6 +7,9 @@ const Promise = require( 'bluebird' );
 const signale = require( 'signale' );
 const writeFilePromise = Promise.promisify( fs.writeFile );
 
+signale.config( {
+	displayTimestamp: true
+} );
 
 /*
 
@@ -374,6 +377,8 @@ async function gotoUrl( browser, url ) {
 
 									if ( ! result )
 										logger.error( 'Promise.delay triggered' );
+
+									logger.debug( 'Time to stop' );
 
 									return client.send( 'Profiler.stopTypeProfile' )
 										.then( () => logger.debug( 'TypeProfiler stopped' ) )
