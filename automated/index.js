@@ -260,7 +260,7 @@ function waitForNetworkIdle( page, timeout, maxInflightRequests = 0 ) {
 
 	}
 
-	function onRequestFinished() {
+	function onRequestFinished( req, foo ) {
 
 		if ( inflight === 0 )
 			return;
@@ -370,7 +370,12 @@ async function gotoUrl( browser, url ) {
 							logger.debug( 'Profiler.takeTypeProfile' );
 
 							return Promise.any( [
-								client.send( 'Profiler.takeTypeProfile' ),
+								client.send( 'Profiler.takeTypeProfile' ).catch( err => {
+
+									logger.error( 'Profiler.takeTypeProfile ERR >', err );
+									return false; // { entries: [], scriptId: - 1, url: page.url() };
+
+								} ),
 								new Promise( x => x ).delay( 60000, false )
 							] )
 								.then( result => {
