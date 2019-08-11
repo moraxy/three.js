@@ -6,14 +6,12 @@ const glob = require( 'glob' );
 const Promise = require( 'bluebird' );
 const signale = require( 'signale' );
 const writeFilePromise = Promise.promisify( fs.writeFile );
-const xunit = require( './xunit' );
 
 
 signale.config( {
 	displayTimestamp: true
 } );
 
-const xUnitFile = new xunit();
 
 /*
 
@@ -37,8 +35,6 @@ process.on( 'uncaughtException', error => {
 	if ( singleMode ) {
 
 		console.error( 'singleMode' );
-
-		xUnitFile.end();
 
 		process.exit( - 1 );
 
@@ -149,20 +145,14 @@ function search( urls = [] ) {
 
 				logger.debug( 'Browser launched' );
 
-				xUnitFile.startSuite( 'typeProfiling' );
-
 				return Promise.each( urls, ( url, index ) => {
 
 					logger.debug( `${index + 1}/${urls.length} ${url}` );
-
-					xUnitFile.startTest( url );
 
 					return gotoUrl( browser, url )
 						.catch( err => {
 
 							console.error( '------', err, '------' );
-
-							xUnitFile.failTest();
 
 							return true;
 
@@ -384,8 +374,6 @@ async function gotoUrl( browser, url ) {
 							return Promise.any( [
 								client.send( 'Profiler.takeTypeProfile' ).catch( err => {
 
-									xUnitFile.failTest();
-
 									logger.error( 'Profiler.takeTypeProfile ERR >', err );
 									return false; // { entries: [], scriptId: - 1, url: page.url() };
 
@@ -408,8 +396,6 @@ async function gotoUrl( browser, url ) {
 
 									logger.debug( `typeProfile.result.length: ${result.result.length}` );
 
-									xUnitFile.passTest();
-
 									return writeFilePromise(
 										`typeProfile-${crudelyEscapedUrl}`,
 										stringify( { file: page.url(), results: result } ),
@@ -419,17 +405,12 @@ async function gotoUrl( browser, url ) {
 								} )
 								.catch( err => {
 
-									xUnitFile.failTest();
-
 									logger.error( `takeTypeProfile failed: ${err}` );
 
 								} );
 
 						} )
 						.catch( err => {
-
-							xUnitFile.failTest();
-							xUnitFile.endSuite();
 
 							console.error( 'ERR Profiler.takeTypeProfile >', err );
 							process.exit( - 1 );
@@ -441,8 +422,6 @@ async function gotoUrl( browser, url ) {
 
 					logger.error( `> Page.goto failed: ${err}\nSTACK:${err.stack}\nURL: ${url}` );
 
-					xUnitFile.failTest();
-
 					fs.writeFileSync( `${new Date().getTime()}.err`, url, 'utf8' );
 
 					// no return false, we carry on without that url
@@ -453,9 +432,6 @@ async function gotoUrl( browser, url ) {
 		} )
 		.then( () => page.close() )
 		.catch( err => {
-
-			xUnitFile.failTest();
-			xUnitFile.endSuite();
 
 			console.error( 'everything failed >', err );
 			process.exit( - 1 );
@@ -515,13 +491,9 @@ if ( require.main === module ) {
 
 			}
 
-			xUnitFile.endSuite();
-
 		} )();
 
 	} catch ( err ) {
-
-		xUnitFile.endSuite();
 
 		console.error( 'The big one >', err );
 		process.exit( - 1 );
