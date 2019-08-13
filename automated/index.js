@@ -60,10 +60,6 @@ const defaultConfig = {
 	urlBase: 'https://raw.githack.com/moraxy/three.js/automated/examples/',
 	fileBase: __dirname + '/../',
 
-	shaderLibPath: 'src/renderers/shaders/ShaderLib.js',
-	shaderChunkPath: 'src/renderers/shaders/ShaderChunk.js',
-	uniformsLibPath: 'src/renderers/shaders/UniformsLib.js',
-
 	mainScriptFilename: 'three.module.js',
 	mainScriptPath: 'build/three.module.js',
 
