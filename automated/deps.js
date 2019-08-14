@@ -536,7 +536,12 @@ async function gotoUrl( browser, url ) {
 							logger.debug( 'Profiler.takePreciseCoverage' );
 
 							return Promise.any( [
-								client.send( 'Profiler.takePreciseCoverage' ),
+								client.send( 'Profiler.takePreciseCoverage' ).catch( err => {
+
+									logger.error( 'Profiler.takePreciseCoverage ERR >', err );
+									return false; // { entries: [], scriptId: - 1, url: page.url() };
+
+								} ),
 								new Promise( x => x ).delay( 60000, false )
 							] )
 								.then( result => {
@@ -869,15 +874,15 @@ function processThreeJsCoverage( func, deps ) {
 
 			}
 
-			logger.debug( 'Found file:', mapResult.sourceFile.path );
-			logger.debug( 'Looking for:', mapResult.sourceLine );
-			logger.debug( 'Looking at index:', mapResult.sourceFile.text.indexOf( mapResult.sourceLine ) + mapResult.column );
-			logger.debug( 'Originally:', range.startOffset );
+			// logger.debug( 'Found file:', mapResult.sourceFile.path );
+			// logger.debug( 'Looking for:', mapResult.sourceLine );
+			// logger.debug( 'Looking at index:', mapResult.sourceFile.text.indexOf( mapResult.sourceLine ) + mapResult.column );
+			// logger.debug( 'Originally:', range.startOffset );
 
 			const vrAST = astCache[ mapResult.sourceFile.path ];
 
-			logger.debug( 'vrAST is not undefined:', vrAST !== undefined );
-			logger.debug( 'vrAST is not null:', vrAST !== null );
+			// logger.debug( 'vrAST is not undefined:', vrAST !== undefined );
+			// logger.debug( 'vrAST is not null:', vrAST !== null );
 
 			// FIXME: findNodeAt seldom causes issues, findNodeAfter works - needs to be tested thou
 			// node mass-import-both.js 2db634d94955e119d5a519d091cb57ebf52f55e3 4834fc7b289dccf713e94abda5852eebb8bae2f1
