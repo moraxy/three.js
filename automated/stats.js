@@ -695,11 +695,18 @@ if ( require.main === module ) {
 					.filter( f => f.includes( 'offscreencanvas' ) === false )
 					.map( f => f.replace( /^.*?\/examples/i, 'https://raw.githack.com/moraxy/three.js/automated/examples' ) );
 
-				const chunkSize = Math.ceil( exes.length / totalJobs ); // err on one too many instead of one too few
+				const zeroJobNumber = jobNumber - 1;
 
-				const workload = exes.slice( ( jobNumber - 1 ) * chunkSize, ( jobNumber - 1 ) * chunkSize + chunkSize );
+				const workload = exes.reduce( ( all, ex, i ) => {
 
-				console.log( 'chunkSize', chunkSize, 'length', workload.length, workload );
+					if ( i % totalJobs === zeroJobNumber )
+						all.push( ex );
+
+					return all;
+
+				}, [] );
+
+				console.log( 'length', workload.length, workload );
 				init();
 				await search( workload );
 

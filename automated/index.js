@@ -30,26 +30,7 @@ process.on( 'uncaughtException', error => {
 
 	console.error( 'uncaughtException' );
 	console.error( error );
-	// process.exit( 1 );
-
-	if ( singleMode ) {
-
-		console.error( 'singleMode' );
-
-		process.exit( - 1 );
-
-	} else {
-
-		const exes = glob.sync( __dirname + '/../examples/webgl_*.html' )
-			.filter( f => f.includes( 'offscreencanvas' ) === false )
-			.map( f => f.replace( /^.*?\/examples/i, 'https://raw.githack.com/moraxy/three.js/automated/examples' ) );
-
-		const shortExes = exes.slice( exes.indexOf( currentUrl ) + 1 );
-		console.log( { shortExes } );
-		init();
-		search( shortExes );
-
-	}
+	process.exit( 1 );
 
 } );
 
@@ -74,7 +55,6 @@ var config;
 const seedRandom = fs.readFileSync( __dirname + '/seedrandom.min.js', 'utf8' );
 const timekeeper = fs.readFileSync( __dirname + '/timekeeper.min.js', 'utf8' );
 
-let currentUrl; // evil hack
 let singleMode; // same evil hack
 
 var profilerRunning = false;
@@ -340,8 +320,6 @@ async function gotoUrl( browser, url ) {
 			//
 			logger.debug( `Goto ${url}` );
 
-			currentUrl = url;
-
 			return page.goto( url, { timeout: 120000, waitUntil: 'load' } )
 				.then( () => {
 
@@ -467,11 +445,18 @@ if ( require.main === module ) {
 					.filter( f => f.includes( 'offscreencanvas' ) === false )
 					.map( f => f.replace( /^.*?\/examples/i, 'https://raw.githack.com/moraxy/three.js/automated/examples' ) );
 
-				const chunkSize = Math.ceil( exes.length / totalJobs ); // err on one too many instead of one too few
+				const zeroJobNumber = jobNumber - 1;
 
-				const workload = exes.slice( ( jobNumber - 1 ) * chunkSize, ( jobNumber - 1 ) * chunkSize + chunkSize );
+				const workload = exes.reduce( ( all, ex, i ) => {
 
-				console.log( 'chunkSize', chunkSize, 'length', workload.length, workload );
+					if ( i % totalJobs === zeroJobNumber )
+						all.push( ex );
+
+					return all;
+
+				}, [] );
+
+				console.log( 'length', workload.length, workload );
 				init();
 				await search( workload );
 
