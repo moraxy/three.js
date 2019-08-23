@@ -147,8 +147,12 @@
 		<h2>Formats</h2>
 		<code>
 		THREE.AlphaFormat
+		THREE.RGFormat
+		THREE.RGIntegerFormat
 		THREE.RGBFormat
+		THREE.RGBIntegerFormat
 		THREE.RGBAFormat
+		THREE.RGBAIntegerFormat
 		THREE.LuminanceFormat
 		THREE.LuminanceAlphaFormat
 		THREE.RGBEFormat
@@ -161,9 +165,27 @@
 
 		[page:constant AlphaFormat] discards the red, green and blue components and reads just the alpha component.<br /><br />
 
+		[page:constant RGFormat] discards the alpha, and blue components and reads the red, and green components.
+		(can only be used with a WebGL 2 rendering context).
+		<br /><br />
+
+		[page:constant RGIntegerFormat] discards the alpha, and blue components and reads the red, and green components.
+		The texels are read as integers instead of floating point.
+		(can only be used with a WebGL 2 rendering context).
+		<br /><br />
+
 		[page:constant RGBFormat] discards the alpha components and reads the red, green and blue components.<br /><br />
 
+		[page:constant RGBIntegerFormat] discards the alpha components and reads the red, green and blue components.
+		(can only be used with a WebGL 2 rendering context).
+		<br /><br />
+
 		[page:constant RGBAFormat] is the default and reads the red, green, blue and alpha components.<br /><br />
+
+		[page:constant RGBAIntegerFormat] is the default and reads the red, green, blue and alpha components.
+		The texels are read as integers instead of floating point.
+		(can only be used with a WebGL 2 rendering context).
+		<br /><br />
 
 		[page:constant LuminanceFormat] reads each element as a single luminance component.
 		 This is then converted to a floating point, clamped to the range [0,1], and then assembled
@@ -236,6 +258,258 @@
 		For use with a [page:CompressedTexture CompressedTexture]'s [page:Texture.format format]	property,
 		these require support for the [link:https://www.khronos.org/registry/webgl/extensions/WEBGL_compressed_texture_etc1/ WEBGL_compressed_texture_etc1]
 		extension. <br /><br />
+		</p>
+
+		<h2>Internal Formats</h2>
+		<code>
+		THREE.AlphaFormat
+		THREE.RGBFormat
+		THREE.RGBAFormat
+		THREE.LuminanceFormat
+		THREE.LuminanceAlphaFormat
+		THREE.RedIntegerFormat
+		THREE.R8Format
+		THREE.R8_SNORMFormat
+		THREE.R8IFormat
+		THREE.R8UIFormat
+		THREE.R16IFormat
+		THREE.R16UIFormat
+		THREE.R16FFormat
+		THREE.R32IFormat
+		THREE.R32UIFormat
+		THREE.R32FFormat
+		THREE.RG8Format
+		THREE.RG8_SNORMFormat
+		THREE.RG8IFormat
+		THREE.RG8UIFormat
+		THREE.RG16IFormat
+		THREE.RG16UIFormat
+		THREE.RG16FFormat
+		THREE.RG32IFormat
+		THREE.RG32UIFormat
+		THREE.RG32FFormat
+		THREE.RGB565Format
+		THREE.RGB8Format
+		THREE.RGB8_SNORMFormat
+		THREE.RGB8IFormat
+		THREE.RGB8UIFormat
+		THREE.RGB16IFormat
+		THREE.RGB16UIFormat
+		THREE.RGB16FFormat
+		THREE.RGB32IFormat
+		THREE.RGB32UIFormat
+		THREE.RGB32FFormat
+		THREE.RGB9_E5Format
+		THREE.SRGB8Format
+		THREE.R11F_G11F_B10FFormat
+		THREE.RGBA4Format
+		THREE.RGBA8Format
+		THREE.RGBA8_SNORMFormat
+		THREE.RGBA8IFormat
+		THREE.RGBA8UIFormat
+		THREE.RGBA16IFormat
+		THREE.RGBA16UIFormat
+		THREE.RGBA16FFormat
+		THREE.RGBA32IFormat
+		THREE.RGBA32UIFormat
+		THREE.RGBA32FFormat
+		THREE.RGB5_A1Format
+		THREE.RGB10_A2Format
+		THREE.RGB10_A2UIFormat
+		THREE.SRGB8_ALPHA8Format
+		THREE.DepthComponent16Format
+		THREE.DepthComponent24Format
+		THREE.DepthComponent32FFormat
+		THREE.Depth24Stencil8Format
+		THREE.Depth32FStencil8Format
+		</code>
+
+		<p>
+
+		Heads up: changing the internal format of a texture will only affect the
+		texture when using a WebGL 2 rendering context.<br /><br />
+
+		For use with a texture's [page:Texture.internalFormat internalFormat]	property,
+		these define how elements of a texture, or *texels*, are stored on the GPU.<br /><br />
+
+		[page:constant R8Format] stores the red component on 8 bits.<br /><br />
+
+		[page:constant R8_SNORMFormat] stores the red component on 8 bits. The component is stored as normalized. <br /><br />
+
+		[page:constant R8IFormat] stores the red component on 8 bits. The component is stored as an integer. <br /><br />
+
+		[page:constant R8UIFormat] stores the red component on 8 bits. The component is stored as an unsigned integer. <br /><br />
+
+		[page:constant R16IFormat] stores the red component on 16 bits. The component is stored as an integer. <br /><br />
+
+		[page:constant R16UIFormat] stores the red component on 16 bits. The component is stored as an unsigned integer. <br /><br />
+
+		[page:constant R16FFormat] stores the red component on 16 bits. The component is stored as floating point. <br /><br />
+
+		[page:constant R32IFormat] stores the red component on 32 bits. The component is stored as an integer. <br /><br />
+
+		[page:constant R32UIFormat] stores the red component on 32 bits. The component is stored as an unsigned integer. <br /><br />
+
+		[page:constant R32FFormat] stores the red component on 32 bits. The component is stored as floating point. <br /><br />
+
+		[page:constant RG8Format] stores the red and green components on 8 bits each.<br /><br />
+
+		[page:constant RG8_SNORMFormat] stores the red and green components on 8 bits each.
+		Every component is stored as normalized.
+		<br /><br />
+
+		[page:constant RG8IFormat] stores the red and green components on 8 bits each.
+		Every component is stored as an integer.
+		<br /><br />
+
+		[page:constant RG8UIFormat] stores the red and green components on 8 bits each.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant RG16IFormat] stores the red and green components on 16 bits each.
+		Every component is stored as an integer.
+		<br /><br />
+
+		[page:constant RG16UIFormat] stores the red and green components on 16 bits each.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant RG16FFormat] stores the red and green components on 16 bits each.
+		Every component is stored as floating point.
+		<br /><br />
+
+		[page:constant RG32IFormat] stores the red and green components on 32 bits each.
+		Every component is stored as an integer.
+		<br /><br />
+
+		[page:constant RG32UIFormat] stores the red and green components on 32 bits.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant RG32FFormat] stores the red and green components on 32 bits.
+		Every component is stored as floating point.
+		<br /><br />
+
+		[page:constant RGB8Format] stores the red, green, and blue components on 8 bits each.
+
+		[page:constant RGB8_SNORMFormat] stores the red, green, and blue components on 8 bits each.
+		Every component is stored as normalized.
+		<br /><br />
+
+		[page:constant RGB8IFormat] stores the red, green, and blue components on 8 bits each.
+		Every component is stored as an integer.
+		<br /><br />
+
+		[page:constant RGB8UIFormat] stores the red, green, and blue components on 8 bits each.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant RGB16IFormat] stores the red, green, and blue components on 16 bits each.
+		Every component is stored as an integer.
+		<br /><br />
+
+		[page:constant RGB16UIFormat] stores the red, green, and blue components on 16 bits each.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant RGB16FFormat] stores the red, green, and blue components on 16 bits each.
+		Every component is stored as floating point
+		<br /><br />
+
+		[page:constant RGB32IFormat] stores the red, green, and blue components on 32 bits each.
+		Every component is stored as an integer.
+		<br /><br />
+
+		[page:constant RGB32UIFormat] stores the red, green, and blue components on 32 bits each.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant RGB32FFormat] stores the red, green, and blue components on 32 bits each.
+		Every component is stored as floating point
+		<br /><br />
+
+		[page:constant R11F_G11F_B10FFormat] stores the red, green, and blue components respectively on 11 bits, 11 bits, and 10bits.
+		Every component is stored as floating point.
+		<br /><br />
+
+		[page:constant RGB565Format] stores the red, green, and blue components respectively on 5 bits, 6 bits, and 5 bits.<br /><br />
+
+		[page:constant RGB9_E5Format] stores the red, green, and blue components on 9 bits each.<br /><br />
+
+		[page:constant RGBA8Format] stores the red, green, blue, and alpha components on 8 bits each.<br /><br />
+
+		[page:constant RGBA8_SNORMFormat] stores the red, green, blue, and alpha components on 8 bits.
+		Every component is stored as normalized.
+		<br /><br />
+
+		[page:constant RGBA8IFormat] stores the red, green, blue, and alpha components on 8 bits each.
+		Every component is stored as an integer.
+		<br /><br />
+
+		[page:constant RGBA8UIFormat] stores the red, green, blue, and alpha components on 8 bits.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant RGBA16IFormat] stores the red, green, blue, and alpha components on 16 bits.
+		Every component is stored as an integer.
+		<br /><br />
+
+		[page:constant RGBA16UIFormat] stores the red, green, blue, and alpha components on 16 bits.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant RGBA16FFormat] stores the red, green, blue, and alpha components on 16 bits.
+		Every component is stored as floating point.
+		<br /><br />
+
+		[page:constant RGBA32IFormat] stores the red, green, blue, and alpha components on 32 bits.
+		Every component is stored as an integer.
+		<br /><br />
+
+		[page:constant RGBA32UIFormat] stores the red, green, blue, and alpha components on 32 bits.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant RGBA32FFormat] stores the red, green, blue, and alpha components on 32 bits.
+		Every component is stored as floating point.
+		<br /><br />
+
+		[page:constant RGB5_A1Format] stores the red, green, blue, and alpha components respectively on 5 bits, 5 bits, 5 bits, and 1 bit.<br /><br />
+
+		[page:constant RGB10_A2Format] stores the red, green, blue, and alpha components respectively on 10 bits, 10 bits, 10 bits and 2 bits.<br /><br />
+
+		[page:constant RGB10_A2UIFormat] stores the red, green, blue, and alpha components respectively on 10 bits, 10 bits, 10 bits and 2 bits.
+		Every component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant SRGB8Format] stores the red, green, and blue components on 8 bits each.<br /><br />
+
+		[page:constant SRGB8_ALPHA8Format] stores the red, green, blue, and alpha components on 8 bits each.<br /><br />
+
+		[page:constant DepthComponent16Format] stores the depth component on 16bits.<br /><br />
+
+		[page:constant DepthComponent24Format] stores the depth component on 24bits.<br /><br />
+
+		[page:constant DepthComponent32FFormat] stores the depth component on 32bits. The component is stored as floating point.<br /><br />
+
+		[page:constant Depth24Stencil8Format] stores the depth, and stencil components respectively on 24 bits and 8 bits.
+		The stencil component is stored as an unsigned integer.
+		<br /><br />
+
+		[page:constant Depth32FStencil8Format] stores the depth, and stencil components respectively on 24 bits and 8 bits.
+		The depth component is stored as floating point, and the stencil component as an unsigned integer.
+		<br /><br />
+
+		Note that the texture must have the correct [page:Texture.type type] set,
+		as well as the corret [page:Texture.format format].
+		See [link:https://developer.mozilla.org/en/docs/Web/API/WebGLRenderingContext/texImage2D WebGLRenderingContext.texImage2D], and
+		[link:https://developer.mozilla.org/en-US/docs/Web/API/WebGL2RenderingContext/texImage3D WebGL2RenderingContext.texImage3D],
+		for more details regarding the possible combination of [page:Texture.format format], [page:Texture.internalFormat internalFormat],
+		and [page:Texture.type type].<br /><br />
+
+		For more in-depth information regarding internal formats, you can also refer directly
+		to the [link:https://www.khronos.org/registry/webgl/specs/latest/2.0/ WebGL2 Specification] and
+		to the [link:https://www.khronos.org/registry/OpenGL/specs/es/3.0/es_spec_3.0.pdf OpenGL ES 3.0 Specification].
 		</p>
 
 		<h2>Encoding</h2>
