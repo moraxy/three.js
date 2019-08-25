@@ -10,8 +10,6 @@ import { Vector4 } from '../math/Vector4.js';
 
 function WebGL2Renderer( parameters ) {
 
-	console.log( 'THREE.WebGL2Renderer', REVISION );
-
 	parameters = parameters || {};
 
 	var _canvas = parameters.canvas !== undefined ? parameters.canvas : document.createElementNS( 'http://www.w3.org/1999/xhtml', 'canvas' ),
@@ -178,6 +176,8 @@ function WebGL2Renderer( parameters ) {
 
 	return {
 		domElement: _canvas,
+
+		revision: REVISION,
 
 		clear: clear,
 		setPixelRatio: setPixelRatio,

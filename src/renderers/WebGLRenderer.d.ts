@@ -115,6 +115,11 @@ export class WebGLRenderer implements Renderer {
 	domElement: HTMLCanvasElement;
 
 	/**
+	 * The current revision of three.js.
+	 */
+	revision: string
+
+	/**
 	 * The HTML5 Canvas's 'webgl' context obtained from the canvas where the renderer will draw.
 	 */
 	context: WebGLRenderingContext;

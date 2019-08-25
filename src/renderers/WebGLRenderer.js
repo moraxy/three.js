@@ -7,7 +7,8 @@ import {
 	TriangleStripDrawMode,
 	TrianglesDrawMode,
 	LinearToneMapping,
-	BackSide
+	BackSide,
+	REVISION
 } from '../constants.js';
 import { _Math } from '../math/Math.js';
 import { DataTexture } from '../textures/DataTexture.js';
@@ -73,6 +74,8 @@ function WebGLRenderer( parameters ) {
 	// public properties
 
 	this.domElement = _canvas;
+
+	this.revision = REVISION;
 
 	// Debug configuration container
 	this.debug = {
