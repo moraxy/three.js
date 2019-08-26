@@ -12,7 +12,7 @@ export class FogExp implements IFog {
 
 	/**
 	 * Defines how fast the fog will grow dense.
-	 * Default is 0.015.
+	 * Default is 0.00025.
 	 */
 	density: number;
 

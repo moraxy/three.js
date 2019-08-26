@@ -765,7 +765,7 @@ var list = {
 
 			"场景": {
 				"Fog": "api/zh/scenes/Fog",
-				"FogExp": "api/en/scenes/FogExp", //ZH doc missing for now
+				"FogExp": "api/zh/scenes/FogExp",
 				"FogExp2": "api/zh/scenes/FogExp2",
 				"Scene": "api/zh/scenes/Scene"
 			},

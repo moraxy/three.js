@@ -11,7 +11,7 @@ function FogExp( color, density ) {
 	this.name = '';
 
 	this.color = new Color( color );
-	this.density = ( density !== undefined ) ? density : 0.015;
+	this.density = ( density !== undefined ) ? density : 0.00025;
 
 }
 

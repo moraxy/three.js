@@ -143,7 +143,7 @@ Sidebar.Scene = function ( editor ) {
 	var fogType = new UI.Select().setOptions( {
 
 		'None': 'None',
-		'Fog': 'Linear',
+		'Fog': 'Ranged',
 		'FogExp': 'Exponential',
 		'FogExp2': 'Exp. squared'
 
