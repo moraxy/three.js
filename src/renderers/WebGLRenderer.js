@@ -2140,7 +2140,7 @@ function WebGLRenderer( parameters ) {
 			uniforms.fogNear.value = fog.near;
 			uniforms.fogFar.value = fog.far;
 
-		} else if ( fog.isFogExp2 ) {
+		} else if ( fog.isFogExp || fog.isFogExp2 ) {
 
 			uniforms.fogDensity.value = fog.density;
 

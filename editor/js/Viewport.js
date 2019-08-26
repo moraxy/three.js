@@ -470,6 +470,9 @@ var Viewport = function ( editor ) {
 				case 'Fog':
 					scene.fog = new THREE.Fog();
 					break;
+				case 'FogExp':
+					scene.fog = new THREE.FogExp();
+					break;
 				case 'FogExp2':
 					scene.fog = new THREE.FogExp2();
 					break;
@@ -488,7 +491,7 @@ var Viewport = function ( editor ) {
 				scene.fog.near = fogNear;
 				scene.fog.far = fogFar;
 
-			} else if ( scene.fog.isFogExp2 ) {
+			} else if ( scene.fog.isFogExp || scene.fog.isFogExp2 ) {
 
 				scene.fog.color.setHex( fogColor );
 				scene.fog.density = fogDensity;

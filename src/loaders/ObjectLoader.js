@@ -32,6 +32,7 @@ import { Mesh } from '../objects/Mesh.js';
 import { SkinnedMesh } from '../objects/SkinnedMesh.js';
 import { Shape } from '../extras/core/Shape.js';
 import { Fog } from '../scenes/Fog.js';
+import { FogExp } from '../scenes/FogExp.js';
 import { FogExp2 } from '../scenes/FogExp2.js';
 import { HemisphereLight } from '../lights/HemisphereLight.js';
 import { SpotLight } from '../lights/SpotLight.js';
@@ -758,6 +759,10 @@ ObjectLoader.prototype = Object.assign( Object.create( Loader.prototype ), {
 					if ( data.fog.type === 'Fog' ) {
 
 						object.fog = new Fog( data.fog.color, data.fog.near, data.fog.far );
+
+					} else if ( data.fog.type === 'FogExp' ) {
+
+						object.fog = new FogExp( data.fog.color, data.fog.density );
 
 					} else if ( data.fog.type === 'FogExp2' ) {
 

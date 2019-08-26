@@ -8,7 +8,7 @@ export interface IFog {
 }
 
 /**
- * This class contains the parameters that define linear fog, i.e., that grows linearly denser with the distance.
+ * This class contains the parameters that define smooth ranged fog, i.e., that grows smoothly denser from the near to the far distance.
  */
 export class Fog implements IFog {
 

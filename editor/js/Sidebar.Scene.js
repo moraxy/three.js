@@ -144,7 +144,8 @@ Sidebar.Scene = function ( editor ) {
 
 		'None': 'None',
 		'Fog': 'Linear',
-		'FogExp2': 'Exponential'
+		'FogExp': 'Exponential',
+		'FogExp2': 'Exp. squared'
 
 	} ).setWidth( '150px' );
 	fogType.onChange( function () {
@@ -237,6 +238,11 @@ Sidebar.Scene = function ( editor ) {
 				fogNear.setValue( scene.fog.near );
 				fogFar.setValue( scene.fog.far );
 
+			} else if ( scene.fog.isFogExp ) {
+
+				fogType.setValue( "FogExp" );
+				fogDensity.setValue( scene.fog.density );
+
 			} else if ( scene.fog.isFogExp2 ) {
 
 				fogType.setValue( "FogExp2" );
@@ -261,7 +267,7 @@ Sidebar.Scene = function ( editor ) {
 		fogPropertiesRow.setDisplay( type === 'None' ? 'none' : '' );
 		fogNear.setDisplay( type === 'Fog' ? '' : 'none' );
 		fogFar.setDisplay( type === 'Fog' ? '' : 'none' );
-		fogDensity.setDisplay( type === 'FogExp2' ? '' : 'none' );
+		fogDensity.setDisplay( ( type === 'FogExp' || type === 'FogExp2' ) ? '' : 'none' );
 
 	}
 
